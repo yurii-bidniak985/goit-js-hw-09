@@ -68,26 +68,29 @@ const images = [
 ];
 
 const galleryEl = document.querySelector('.gallery');
-const creatListImage = images
-    .map(image => {
-        return `
-        <li class="gallery-item">
-	        <a class="gallery-link" href=${image.original}>
-		        <img 
-		          class="gallery-image" 
-		          src=${image.preview} 
-		          alt=${image.description}
-		        />
-	        </a>
-        </li>`
-    })
+function createMarkup() {
+  const markup = images
+    .map(
+      ({ preview, original, description }) => `
+<li class='gallery-item'>
+    <a class='gallery-link' href='${original}'>
+        <img
+            class='gallery-image'
+            src='${preview}'
+            alt='${description}'
+            />
+    </a>
+</li>
+`
+    )
     .join('');
-galleryEl.insertAdjacentHTML('beforeend', creatListImage);
-
-new SimpleLightbox('.gallery a', {
+  galleryEl.innerHTML = markup;
+  const gallery = new SimpleLightbox('.gallery a', {
     captionDelay: 250,
-    captionData: 'alt',
-});
+    captionsData: 'alt',
+  });
+}
+createMarkup(images);
 
 
 
